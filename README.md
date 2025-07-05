@@ -51,17 +51,23 @@ erc-7730-defi/
 ### ✅ Implemented
 
 - **Uniswap V2 & V3**: Swap, Add/Remove Liquidity
-- **Aave V2 & V3**: Supply, Borrow, Repay, Withdraw
-- **Compound V2 & V3**: Supply, Borrow, Repay, Redeem
+- **Aave V3**: Supply, Borrow, Repay, Withdraw, Liquidation
+- **Compound V3**: Supply, Borrow, Repay, Withdraw
 - **Curve Finance**: Swap, Add/Remove Liquidity
-- **MakerDAO**: Open/Manage CDPs, DAI operations
+- **MakerDAO**: DAI Savings Rate operations
+- **Balancer V2**: Swap, Pool Join/Exit, Flash Loans
+- **1inch**: Aggregator swaps, Unoswap, RFQ orders
+- **SushiSwap**: DEX operations, Liquidity management
+- **PancakeSwap**: Multi-chain DEX operations
+- **Lido**: ETH staking, stETH operations
+- **Yearn Finance**: Vault deposits, withdrawals, redemptions
+- **Convex Finance**: Curve LP staking, rewards claiming
 
-### 🔄 In Progress
+### 🎯 Coverage Stats
 
-- **Yearn Finance**: Vault operations
-- **SushiSwap**: DEX operations
-- **1inch**: Aggregator swaps
-- **Balancer**: Pool operations
+- **13 major protocols** with full ERC-7730 support
+- **60+ smart contract functions** with clear signing
+- **Multiple chains**: Ethereum, Polygon, Arbitrum, BSC, Optimism, Fantom
 
 ## 🛠️ Installation & Setup
 
@@ -164,8 +170,9 @@ This project is submitted for the **Clear Signing (ERC-7730)** track at ETHGloba
 
 ### Impact:
 
-- **20+ DeFi protocols** with clear signing support
-- **100+ smart contract functions** with human-readable displays
+- **13 major DeFi protocols** with clear signing support
+- **60+ smart contract functions** with human-readable displays
+- **Multi-chain coverage** across 6+ blockchain networks
 - **Developer tools** for easy ERC-7730 creation and validation
 - **Comprehensive documentation** for ecosystem adoption
 
