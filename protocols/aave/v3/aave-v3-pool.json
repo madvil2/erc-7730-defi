@@ -1,0 +1,261 @@
+{
+  "$schema": "https://eips.ethereum.org/assets/eip-7730/erc7730-v1.schema.json",
+  "context": {
+    "$id": "Aave V3 Pool",
+    "contract": {
+      "abi": "https://raw.githubusercontent.com/aave/aave-v3-core/master/artifacts/contracts/protocol/pool/Pool.sol/Pool.json",
+      "deployments": [
+        {
+          "chainId": 1,
+          "address": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
+        },
+        {
+          "chainId": 137,
+          "address": "0x794a61358D6845594F94dc1DB02A252b5b4814aD"
+        },
+        {
+          "chainId": 42161,
+          "address": "0x794a61358D6845594F94dc1DB02A252b5b4814aD"
+        },
+        {
+          "chainId": 10,
+          "address": "0x794a61358D6845594F94dc1DB02A252b5b4814aD"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "owner": "Aave Companies",
+    "info": {
+      "legalName": "Aave Companies",
+      "url": "https://aave.com/",
+      "deploymentDate": "2022-03-16T00:00:00Z"
+    },
+    "constants": {
+      "STABLE_RATE": "Stable Rate",
+      "VARIABLE_RATE": "Variable Rate"
+    }
+  },
+  "display": {
+    "formats": {
+      "supply(address asset,uint256 amount,address onBehalfOf,uint16 referralCode)": {
+        "intent": "Supply Asset to Aave",
+        "fields": [
+          {
+            "path": "$.asset",
+            "label": "Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.amount",
+            "label": "Amount",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.asset"
+            }
+          },
+          {
+            "path": "$.onBehalfOf",
+            "label": "On Behalf Of",
+            "format": "addressName"
+          },
+          {
+            "path": "$.referralCode",
+            "label": "Referral Code",
+            "format": "raw"
+          }
+        ],
+        "required": ["asset", "amount", "onBehalfOf"]
+      },
+      "withdraw(address asset,uint256 amount,address to)": {
+        "intent": "Withdraw Asset from Aave",
+        "fields": [
+          {
+            "path": "$.asset",
+            "label": "Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.amount",
+            "label": "Amount",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.asset"
+            }
+          },
+          {
+            "path": "$.to",
+            "label": "Recipient",
+            "format": "addressName"
+          }
+        ],
+        "required": ["asset", "amount", "to"]
+      },
+      "borrow(address asset,uint256 amount,uint256 interestRateMode,uint16 referralCode,address onBehalfOf)": {
+        "intent": "Borrow Asset from Aave",
+        "fields": [
+          {
+            "path": "$.asset",
+            "label": "Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.amount",
+            "label": "Amount",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.asset"
+            }
+          },
+          {
+            "path": "$.interestRateMode",
+            "label": "Interest Rate Mode",
+            "format": "raw"
+          },
+          {
+            "path": "$.onBehalfOf",
+            "label": "On Behalf Of",
+            "format": "addressName"
+          },
+          {
+            "path": "$.referralCode",
+            "label": "Referral Code",
+            "format": "raw"
+          }
+        ],
+        "required": ["asset", "amount", "interestRateMode", "onBehalfOf"]
+      },
+      "repay(address asset,uint256 amount,uint256 interestRateMode,address onBehalfOf)": {
+        "intent": "Repay Borrowed Asset",
+        "fields": [
+          {
+            "path": "$.asset",
+            "label": "Asset to Repay",
+            "format": "addressName"
+          },
+          {
+            "path": "$.amount",
+            "label": "Repay Amount",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.asset"
+            }
+          },
+          {
+            "path": "$.interestRateMode",
+            "label": "Interest Rate Mode",
+            "format": "raw"
+          },
+          {
+            "path": "$.onBehalfOf",
+            "label": "Repay For",
+            "format": "addressName"
+          }
+        ],
+        "required": ["asset", "amount", "interestRateMode", "onBehalfOf"]
+      },
+      "setUserUseReserveAsCollateral(address asset,bool useAsCollateral)": {
+        "intent": "Set Asset as Collateral",
+        "fields": [
+          {
+            "path": "$.asset",
+            "label": "Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.useAsCollateral",
+            "label": "Use as Collateral",
+            "format": "raw"
+          }
+        ],
+        "required": ["asset", "useAsCollateral"]
+      },
+      "swapBorrowRateMode(address asset,uint256 interestRateMode)": {
+        "intent": "Switch Borrow Rate Mode",
+        "fields": [
+          {
+            "path": "$.asset",
+            "label": "Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.interestRateMode",
+            "label": "New Rate Mode",
+            "format": "raw"
+          }
+        ],
+        "required": ["asset", "interestRateMode"]
+      },
+      "liquidationCall(address collateralAsset,address debtAsset,address user,uint256 debtToCover,bool receiveAToken)": {
+        "intent": "Liquidate Position",
+        "fields": [
+          {
+            "path": "$.collateralAsset",
+            "label": "Collateral Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.debtAsset",
+            "label": "Debt Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.user",
+            "label": "User to Liquidate",
+            "format": "addressName"
+          },
+          {
+            "path": "$.debtToCover",
+            "label": "Debt Amount to Cover",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.debtAsset"
+            }
+          },
+          {
+            "path": "$.receiveAToken",
+            "label": "Receive aToken",
+            "format": "raw"
+          }
+        ],
+        "required": ["collateralAsset", "debtAsset", "user", "debtToCover", "receiveAToken"]
+      },
+      "flashLoan(address receiverAddress,address[] assets,uint256[] amounts,uint256[] interestRateModes,address onBehalfOf,bytes params,uint16 referralCode)": {
+        "intent": "Flash Loan",
+        "fields": [
+          {
+            "path": "$.receiverAddress",
+            "label": "Receiver Contract",
+            "format": "addressName"
+          },
+          {
+            "path": "$.assets",
+            "label": "Assets",
+            "format": "raw"
+          },
+          {
+            "path": "$.amounts",
+            "label": "Amounts",
+            "format": "raw"
+          },
+          {
+            "path": "$.interestRateModes",
+            "label": "Interest Rate Modes",
+            "format": "raw"
+          },
+          {
+            "path": "$.onBehalfOf",
+            "label": "On Behalf Of",
+            "format": "addressName"
+          },
+          {
+            "path": "$.referralCode",
+            "label": "Referral Code",
+            "format": "raw"
+          }
+        ],
+        "required": ["receiverAddress", "assets", "amounts", "interestRateModes", "onBehalfOf"]
+      }
+    }
+  }
+}

@@ -1,0 +1,285 @@
+{
+  "$schema": "https://eips.ethereum.org/assets/eip-7730/erc7730-v1.schema.json",
+  "context": {
+    "$id": "1inch Router V5",
+    "contract": {
+      "abi": "https://raw.githubusercontent.com/1inch/1inch-v5-contracts/master/contracts/AggregationRouterV5.sol",
+      "deployments": [
+        {
+          "chainId": 1,
+          "address": "0x1111111254EEB25477B68fb85Ed929f73A960582"
+        },
+        {
+          "chainId": 137,
+          "address": "0x1111111254EEB25477B68fb85Ed929f73A960582"
+        },
+        {
+          "chainId": 56,
+          "address": "0x1111111254EEB25477B68fb85Ed929f73A960582"
+        },
+        {
+          "chainId": 42161,
+          "address": "0x1111111254EEB25477B68fb85Ed929f73A960582"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "owner": "1inch Network",
+    "info": {
+      "legalName": "1inch Network",
+      "url": "https://1inch.io/",
+      "deploymentDate": "2022-11-04T00:00:00Z"
+    },
+    "constants": {
+      "ETH_ADDRESS": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "WETH_MAINNET": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "WETH_POLYGON": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "WETH_BSC": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "WETH_ARBITRUM": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+    }
+  },
+  "display": {
+    "formats": {
+      "swap(address executor,tuple desc,bytes permit,bytes data)": {
+        "intent": "Swap Tokens via 1inch",
+        "fields": [
+          {
+            "path": "$.executor",
+            "label": "Executor",
+            "format": "addressName"
+          },
+          {
+            "path": "$.desc.srcToken",
+            "label": "From Token",
+            "format": "addressName"
+          },
+          {
+            "path": "$.desc.dstToken",
+            "label": "To Token",
+            "format": "addressName"
+          },
+          {
+            "path": "$.desc.srcReceiver",
+            "label": "Source Receiver",
+            "format": "addressName"
+          },
+          {
+            "path": "$.desc.dstReceiver",
+            "label": "Destination Receiver",
+            "format": "addressName"
+          },
+          {
+            "path": "$.desc.amount",
+            "label": "Input Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.desc.minReturnAmount",
+            "label": "Minimum Output",
+            "format": "amount"
+          },
+          {
+            "path": "$.desc.flags",
+            "label": "Flags",
+            "format": "raw"
+          }
+        ],
+        "required": ["executor", "desc"]
+      },
+      "unoswap(address srcToken,uint256 amount,uint256 minReturn,uint256 dex)": {
+        "intent": "Simple Unoswap",
+        "fields": [
+          {
+            "path": "$.srcToken",
+            "label": "From Token",
+            "format": "addressName"
+          },
+          {
+            "path": "$.amount",
+            "label": "Input Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.minReturn",
+            "label": "Minimum Return",
+            "format": "raw"
+          },
+          {
+            "path": "$.dex",
+            "label": "DEX Identifier",
+            "format": "raw"
+          }
+        ],
+        "required": ["srcToken", "amount", "minReturn", "dex"]
+      },
+      "unoswapTo(address recipient,address srcToken,uint256 amount,uint256 minReturn,uint256 dex)": {
+        "intent": "Unoswap to Recipient",
+        "fields": [
+          {
+            "path": "$.recipient",
+            "label": "Recipient",
+            "format": "addressName"
+          },
+          {
+            "path": "$.srcToken",
+            "label": "From Token",
+            "format": "addressName"
+          },
+          {
+            "path": "$.amount",
+            "label": "Input Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.minReturn",
+            "label": "Minimum Return",
+            "format": "raw"
+          },
+          {
+            "path": "$.dex",
+            "label": "DEX Identifier",
+            "format": "raw"
+          }
+        ],
+        "required": ["recipient", "srcToken", "amount", "minReturn", "dex"]
+      },
+      "clipperSwap(address clipperExchange,address srcToken,address dstToken,uint256 inputAmount,uint256 outputAmount,uint256 goodUntil,bytes32 r,bytes32 vs)": {
+        "intent": "Clipper DEX Swap",
+        "fields": [
+          {
+            "path": "$.clipperExchange",
+            "label": "Clipper Exchange",
+            "format": "addressName"
+          },
+          {
+            "path": "$.srcToken",
+            "label": "From Token",
+            "format": "addressName"
+          },
+          {
+            "path": "$.dstToken",
+            "label": "To Token",
+            "format": "addressName"
+          },
+          {
+            "path": "$.inputAmount",
+            "label": "Input Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.outputAmount",
+            "label": "Output Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.goodUntil",
+            "label": "Valid Until",
+            "format": "date",
+            "params": {
+              "encoding": "timestamp"
+            }
+          }
+        ],
+        "required": ["clipperExchange", "srcToken", "dstToken", "inputAmount", "outputAmount", "goodUntil"]
+      },
+      "fillOrderRFQ(tuple order,bytes signature,uint256 flagsAndAmount)": {
+        "intent": "Fill RFQ Order",
+        "fields": [
+          {
+            "path": "$.order.info",
+            "label": "Order Info",
+            "format": "raw"
+          },
+          {
+            "path": "$.order.makerAsset",
+            "label": "Maker Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.order.takerAsset",
+            "label": "Taker Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.order.maker",
+            "label": "Maker",
+            "format": "addressName"
+          },
+          {
+            "path": "$.order.allowedSender",
+            "label": "Allowed Sender",
+            "format": "addressName"
+          },
+          {
+            "path": "$.order.makingAmount",
+            "label": "Making Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.order.takingAmount",
+            "label": "Taking Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.flagsAndAmount",
+            "label": "Flags and Amount",
+            "format": "raw"
+          }
+        ],
+        "required": ["order", "signature", "flagsAndAmount"]
+      },
+      "fillOrderRFQTo(tuple order,bytes signature,uint256 flagsAndAmount,address target)": {
+        "intent": "Fill RFQ Order to Target",
+        "fields": [
+          {
+            "path": "$.order.info",
+            "label": "Order Info",
+            "format": "raw"
+          },
+          {
+            "path": "$.order.makerAsset",
+            "label": "Maker Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.order.takerAsset",
+            "label": "Taker Asset",
+            "format": "addressName"
+          },
+          {
+            "path": "$.order.maker",
+            "label": "Maker",
+            "format": "addressName"
+          },
+          {
+            "path": "$.order.allowedSender",
+            "label": "Allowed Sender",
+            "format": "addressName"
+          },
+          {
+            "path": "$.order.makingAmount",
+            "label": "Making Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.order.takingAmount",
+            "label": "Taking Amount",
+            "format": "amount"
+          },
+          {
+            "path": "$.flagsAndAmount",
+            "label": "Flags and Amount",
+            "format": "raw"
+          },
+          {
+            "path": "$.target",
+            "label": "Target Address",
+            "format": "addressName"
+          }
+        ],
+        "required": ["order", "signature", "flagsAndAmount", "target"]
+      }
+    }
+  }
+}

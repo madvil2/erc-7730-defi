@@ -1,0 +1,308 @@
+{
+  "$schema": "https://eips.ethereum.org/assets/eip-7730/erc7730-v1.schema.json",
+  "context": {
+    "$id": "Uniswap V2 Router",
+    "contract": {
+      "abi": "https://raw.githubusercontent.com/Uniswap/v2-periphery/master/build/UniswapV2Router02.json",
+      "deployments": [
+        {
+          "chainId": 1,
+          "address": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+        },
+        {
+          "chainId": 5,
+          "address": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"
+        },
+        {
+          "chainId": 137,
+          "address": "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "owner": "Uniswap Labs",
+    "info": {
+      "legalName": "Uniswap Labs",
+      "url": "https://uniswap.org/",
+      "deploymentDate": "2020-05-04T00:00:00Z"
+    },
+    "constants": {
+      "WETH_MAINNET": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "WETH_POLYGON": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+      "WETH_ARBITRUM": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "WETH_OPTIMISM": "0x4200000000000000000000000000000000000006",
+      "WETH_BASE": "0x4200000000000000000000000000000000000006"
+    }
+  },
+  "display": {
+    "formats": {
+      "swapExactTokensForTokens(uint256 amountIn,uint256 amountOutMin,address[] path,address to,uint256 deadline)": {
+        "intent": "Swap Tokens",
+        "fields": [
+          {
+            "path": "$.amountIn",
+            "label": "Amount In",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.path[0]"
+            }
+          },
+          {
+            "path": "$.amountOutMin",
+            "label": "Minimum Amount Out",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.path[-1]"
+            }
+          },
+          {
+            "path": "$.path",
+            "label": "Token Path",
+            "format": "raw"
+          },
+          {
+            "path": "$.to",
+            "label": "Recipient",
+            "format": "addressName"
+          },
+          {
+            "path": "$.deadline",
+            "label": "Deadline",
+            "format": "date",
+            "params": {
+              "encoding": "timestamp"
+            }
+          }
+        ],
+        "required": ["amountIn", "amountOutMin", "path", "to", "deadline"]
+      },
+      "swapTokensForExactTokens(uint256 amountOut,uint256 amountInMax,address[] path,address to,uint256 deadline)": {
+        "intent": "Swap Tokens (Exact Output)",
+        "fields": [
+          {
+            "path": "$.amountOut",
+            "label": "Exact Amount Out",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.path[-1]"
+            }
+          },
+          {
+            "path": "$.amountInMax",
+            "label": "Maximum Amount In",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.path[0]"
+            }
+          },
+          {
+            "path": "$.path",
+            "label": "Token Path",
+            "format": "raw"
+          },
+          {
+            "path": "$.to",
+            "label": "Recipient",
+            "format": "addressName"
+          },
+          {
+            "path": "$.deadline",
+            "label": "Deadline",
+            "format": "date",
+            "params": {
+              "encoding": "timestamp"
+            }
+          }
+        ],
+        "required": ["amountOut", "amountInMax", "path", "to", "deadline"]
+      },
+      "swapExactETHForTokens(uint256 amountOutMin,address[] path,address to,uint256 deadline)": {
+        "intent": "Swap ETH for Tokens",
+        "fields": [
+          {
+            "path": "$.amountOutMin",
+            "label": "Minimum Token Out",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.path[-1]"
+            }
+          },
+          {
+            "path": "$.path",
+            "label": "Token Path",
+            "format": "raw"
+          },
+          {
+            "path": "$.to",
+            "label": "Recipient",
+            "format": "addressName"
+          },
+          {
+            "path": "$.deadline",
+            "label": "Deadline",
+            "format": "date",
+            "params": {
+              "encoding": "timestamp"
+            }
+          }
+        ],
+        "required": ["amountOutMin", "path", "to", "deadline"]
+      },
+      "swapTokensForExactETH(uint256 amountOut,uint256 amountInMax,address[] path,address to,uint256 deadline)": {
+        "intent": "Swap Tokens for ETH",
+        "fields": [
+          {
+            "path": "$.amountOut",
+            "label": "ETH Amount",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.path[-1]"
+            }
+          },
+          {
+            "path": "$.amountInMax",
+            "label": "Maximum Pay",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.path[0]"
+            }
+          },
+          {
+            "path": "$.path",
+            "label": "Token Path",
+            "format": "raw"
+          },
+          {
+            "path": "$.to",
+            "label": "Recipient",
+            "format": "addressName"
+          },
+          {
+            "path": "$.deadline",
+            "label": "Deadline",
+            "format": "date",
+            "params": {
+              "encoding": "timestamp"
+            }
+          }
+        ],
+        "required": ["amountOut", "amountInMax", "path", "to", "deadline"]
+      },
+      "addLiquidity(address tokenA,address tokenB,uint256 amountADesired,uint256 amountBDesired,uint256 amountAMin,uint256 amountBMin,address to,uint256 deadline)": {
+        "intent": "Add Liquidity",
+        "fields": [
+          {
+            "path": "$.tokenA",
+            "label": "Token A",
+            "format": "addressName"
+          },
+          {
+            "path": "$.tokenB",
+            "label": "Token B",
+            "format": "addressName"
+          },
+          {
+            "path": "$.amountADesired",
+            "label": "Token A Amount",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.tokenA"
+            }
+          },
+          {
+            "path": "$.amountBDesired",
+            "label": "Token B Amount",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.tokenB"
+            }
+          },
+          {
+            "path": "$.amountAMin",
+            "label": "Token A Minimum",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.tokenA"
+            }
+          },
+          {
+            "path": "$.amountBMin",
+            "label": "Token B Minimum",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.tokenB"
+            }
+          },
+          {
+            "path": "$.to",
+            "label": "LP Token Recipient",
+            "format": "addressName"
+          },
+          {
+            "path": "$.deadline",
+            "label": "Deadline",
+            "format": "date",
+            "params": {
+              "encoding": "timestamp"
+            }
+          }
+        ],
+        "required": ["tokenA", "tokenB", "amountADesired", "amountBDesired", "to", "deadline"]
+      },
+      "removeLiquidity(address tokenA,address tokenB,uint256 liquidity,uint256 amountAMin,uint256 amountBMin,address to,uint256 deadline)": {
+        "intent": "Remove Liquidity",
+        "fields": [
+          {
+            "path": "$.tokenA",
+            "label": "Token A",
+            "format": "addressName"
+          },
+          {
+            "path": "$.tokenB",
+            "label": "Token B",
+            "format": "addressName"
+          },
+          {
+            "path": "$.liquidity",
+            "label": "LP Tokens to Remove",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "@.pair"
+            }
+          },
+          {
+            "path": "$.amountAMin",
+            "label": "Token A Minimum",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.tokenA"
+            }
+          },
+          {
+            "path": "$.amountBMin",
+            "label": "Token B Minimum",
+            "format": "tokenAmount",
+            "params": {
+              "tokenPath": "$.tokenB"
+            }
+          },
+          {
+            "path": "$.to",
+            "label": "Recipient",
+            "format": "addressName"
+          },
+          {
+            "path": "$.deadline",
+            "label": "Deadline",
+            "format": "date",
+            "params": {
+              "encoding": "timestamp"
+            }
+          }
+        ],
+        "required": ["tokenA", "tokenB", "liquidity", "to", "deadline"]
+      }
+    }
+  }
+}
